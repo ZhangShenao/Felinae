@@ -1,4 +1,4 @@
-package william.autoconfiguration.datasource;
+package william.feliane.druid.autoconfiguration;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-william.autoconfiguration.datasource.DruidAutoConfiguration
+william.feliane.druid.autoconfiguration.DruidAutoConfiguration
