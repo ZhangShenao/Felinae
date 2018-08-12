@@ -1,4 +1,4 @@
-package william.mybatis.utils;
+package william.mybatis.sql.generator;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -29,7 +29,7 @@ public class SimpleSqlGenerator {
             for (Map.Entry<String, Object> entry : map.entrySet()) {
                 if(!entry.getKey().equals(keyProp) && entry.getValue() != null) {
                     String col = property2Column(entry.getKey());
-                    String val = "#{row." + entry.getKey() + "}";
+                    String val = "#{entity." + entry.getKey() + "}";
                     VALUES(col, val);
                 }
             }
@@ -52,11 +52,11 @@ public class SimpleSqlGenerator {
             for (Map.Entry<String, Object> entry : map.entrySet()) {
                 if(!entry.getKey().equals(keyProp) && entry.getValue() != null) {
                     String col = entry.getKey().replaceAll("([A-Z])", "_$1").toLowerCase().replaceAll("^_", "");
-                    String val = "#{row." + entry.getKey() + "}";
+                    String val = "#{entity." + entry.getKey() + "}";
                     SET(col + " = " + val);
                 }
             }
-            WHERE(property2Column(keyProp) + " = #{row." + keyProp + "}");
+            WHERE(property2Column(keyProp) + " = #{entity." + keyProp + "}");
         }}.toString();
     }
 

@@ -1,4 +1,4 @@
-package william.mybatis.utils;
+package william.mybatis.processor;
 
 import org.apache.ibatis.mapping.ResultMap;
 import org.apache.ibatis.mapping.ResultMapping;
@@ -7,7 +7,7 @@ import org.mybatis.spring.mapper.MapperFactoryBean;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.util.StringUtils;
-import william.mybaits.annotation.AutoResult;
+import william.mybatis.annotation.AutoResult;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
@@ -25,7 +25,7 @@ import static com.google.common.base.CaseFormat.LOWER_UNDERSCORE;
 public class MapperBeanPostProcessor implements BeanPostProcessor{
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
-        if (bean instanceof MapperFactoryBean){
+        if (!(bean instanceof MapperFactoryBean)){
             return bean;
         }
         MapperFactoryBean<?> mapperFactoryBean = (MapperFactoryBean<?>)bean;

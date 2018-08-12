@@ -1,4 +1,4 @@
-package william.mybaits.annotation;
+package william.mybatis.annotation;
 
 import java.lang.annotation.*;
 
