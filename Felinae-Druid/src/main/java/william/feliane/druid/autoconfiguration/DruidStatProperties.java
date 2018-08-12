@@ -1,7 +1,7 @@
 package william.feliane.druid.autoconfiguration;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
-
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -16,8 +16,8 @@ public class DruidStatProperties {
     private String allow = "";
     private String deny = "";
     private String servletUrlMappings = "/druid/*";
-    private List<String> filterUrlPatterns;
-    private String filterExclusions;
+    private List<String> filterUrlPatterns = Arrays.asList("/*");
+    private String filterExclusions = "*.js,*.css,/druid/*";
 
     public String getLoginUsername() {
         return loginUsername;

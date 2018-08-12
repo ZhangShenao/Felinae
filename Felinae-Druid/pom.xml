@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>Felinae-AutoConfiguration</artifactId>
+    <artifactId>Felinae-Druid</artifactId>
 
     <dependencies>
         <dependency>
