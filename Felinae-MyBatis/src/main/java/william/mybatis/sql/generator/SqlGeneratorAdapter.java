@@ -9,14 +9,10 @@ import org.apache.ibatis.annotations.Param;
  */
 public abstract class SqlGeneratorAdapter<T extends IEntity> {
     public String insert(@Param("entity") T entity){
-        return SimpleSqlGenerator.generateSimpleInsert(entity,getTableName(),getKeyProperty());
+        return SimpleSqlGenerator.generateSimpleInsert(entity,entity.tableName(),entity.keyProperty());
     }
 
-    public String update(@Param("entity")T entity){
-        return SimpleSqlGenerator.generateSimpleUpdate(entity,getTableName(),getKeyProperty());
+    public String update(@Param("entity") T entity){
+        return SimpleSqlGenerator.generateSimpleUpdate(entity,entity.tableName(),entity.keyProperty());
     }
-
-    protected abstract String getTableName();
-
-    protected abstract String getKeyProperty();
 }

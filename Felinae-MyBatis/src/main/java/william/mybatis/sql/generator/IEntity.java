@@ -6,4 +6,7 @@ package william.mybatis.sql.generator;
  * @Description:Entity的标志性接口
  */
 public interface IEntity {
+    String tableName();
+
+    String keyProperty();
 }

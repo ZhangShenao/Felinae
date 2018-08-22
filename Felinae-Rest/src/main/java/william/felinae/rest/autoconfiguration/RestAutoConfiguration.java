@@ -27,4 +27,6 @@ public class RestAutoConfiguration {
         return restTemplate;
     }
 
+
+
 }
