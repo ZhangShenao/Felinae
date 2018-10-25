@@ -12,6 +12,8 @@
         <module>Felinae-MyBatis</module>
         <module>Felinae-Rest</module>
         <module>Felinae-Json</module>
+        <module>Felinae-Cache</module>
+        <module>Felinae-Common</module>
     </modules>
     <packaging>pom</packaging>
 

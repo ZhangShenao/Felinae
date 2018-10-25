@@ -48,6 +48,16 @@ public class JacksonUtil {
         }
     }
 
+    public static <T> T readValue(URL value, TypeReference valueTypeRef) {
+        Objects.requireNonNull(value);
+        try {
+            return objectMapper.readValue(value, valueTypeRef);
+        } catch (IOException e) {
+            logger.error("read value error:" + valueTypeRef.getType().getTypeName(), e);
+            throw new RuntimeException("JacksonUtil#readValue:read value:" + value + " error");
+        }
+    }
+
     public static <T> T readValue(String value, TypeReference valueTypeRef) {
         Objects.requireNonNull(value);
         try {

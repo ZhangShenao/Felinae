@@ -21,7 +21,7 @@ import java.nio.charset.StandardCharsets;
 public class RestAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean
-    public RestTemplate restTemplate(){
+    public RestTemplate encodedRestTemplate(){
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.getMessageConverters().set(1, new StringHttpMessageConverter(StandardCharsets.UTF_8));     //解决中文乱码问题
         return restTemplate;

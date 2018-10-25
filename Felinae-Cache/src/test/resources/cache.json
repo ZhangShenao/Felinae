@@ -1,0 +1,27 @@
+[
+  {
+    "name": "cache1"
+  },
+  {
+    "name": "cache2",
+    "maxSize": "100"
+  },
+  {
+    "name": "cache3",
+    "maxSize": "100",
+    "expireSeconds": 10
+  },
+  {
+    "name": "cache4",
+    "maxSize": "100",
+    "expireSeconds": 10,
+    "cacheNullValues": false,
+    "type": "local"
+  },
+  {
+    "name": "cache5",
+    "maxSize": "100",
+    "expireSeconds": 10,
+    "cacheNullValues": false
+  }
+]

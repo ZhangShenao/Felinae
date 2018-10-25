@@ -3,6 +3,7 @@ package william.felinae.rest.client;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -20,6 +21,7 @@ import william.felinae.json.util.JacksonUtil;
 @Component
 public class RestClient {
     @Autowired
+    @Qualifier("encodedRestTemplate")
     private RestTemplate restTemplate;
 
     private Logger logger = LoggerFactory.getLogger(RestClient.class);
