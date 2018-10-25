@@ -16,4 +16,4 @@
 - Felinae-Json：基于Jackson框架封装了常用的Json序列化/反序列化操作；
 - Felinae-Rest：基于RestTemplate，封装了发送HTTP请求并获取响应的操作；
 - Felinae-Cache：缓存模块，自定义CacheManager，可以在项目中使用@Cacheable注解简化缓存操作。目前支持Redis缓存和Caffeine本地缓存；
-- Felinae-Event：异步事件支持，Spring默认的Event是已同步方式执行的，这里提供了异步的执行方式；
+- Felinae-Event：异步事件支持，Spring默认的Event是以同步方式执行的，这里提供了异步的执行方式；
