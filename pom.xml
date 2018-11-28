@@ -15,6 +15,7 @@
         <module>Felinae-Cache</module>
         <module>Felinae-Common</module>
         <module>Felinae-Event</module>
+        <module>Felinae-JMS</module>
     </modules>
     <packaging>pom</packaging>
 
