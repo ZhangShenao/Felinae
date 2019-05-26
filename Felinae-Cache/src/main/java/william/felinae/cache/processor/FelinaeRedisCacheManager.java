@@ -1,4 +1,4 @@
-package william.felinae.cache.config;
+package william.felinae.cache.processor;
 
 import org.springframework.data.redis.cache.RedisCache;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
@@ -10,8 +10,8 @@ import org.springframework.data.redis.cache.RedisCacheWriter;
  * @Date: 2018/9/2 15:28
  * @Description:
  */
-public class FelinaeGinRedisCacheManager extends RedisCacheManager {
-    public FelinaeGinRedisCacheManager(RedisCacheWriter cacheWriter, RedisCacheConfiguration defaultCacheConfiguration) {
+public class FelinaeRedisCacheManager extends RedisCacheManager {
+    public FelinaeRedisCacheManager(RedisCacheWriter cacheWriter, RedisCacheConfiguration defaultCacheConfiguration) {
         super(cacheWriter, defaultCacheConfiguration);
     }
 

@@ -5,13 +5,10 @@ import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
-import org.springframework.cache.Cache;
-import org.springframework.cache.support.SimpleCacheManager;
+import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
@@ -20,12 +17,12 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-import org.springframework.util.CollectionUtils;
-import william.felinae.cache.config.CacheProperty;
-import william.felinae.cache.config.FelinaeGinRedisCacheManager;
-import william.felinae.cache.util.CacheCreator;
-import java.util.LinkedList;
-import java.util.List;
+import william.felinae.cache.processor.FelinaeRedisCacheManager;
+import william.felinae.cache.processor.CacheCreator;
+import william.felinae.cache.processor.CacheItemAnnotationBeanPostProcessor;
+import william.felinae.cache.processor.CacheItemMetaRegistry;
+import william.felinae.cache.processor.FelinaeCacheManager;
+
 
 /**
  * @Auther: ZhangShenao
@@ -33,15 +30,27 @@ import java.util.List;
  * @Description:
  */
 @Configuration
-@ComponentScan
 public class FelinaeCacheAutoConfiguration {
-    @Autowired
-    private CacheCreator cacheCreator;
-
     private static final Logger logger = LoggerFactory.getLogger(FelinaeCacheAutoConfiguration.class);
 
     @Bean
-    public RedisCacheConfiguration felinaeRedisCacheConfiguration(){
+    public CacheItemMetaRegistry cacheItemMetaRegistry() {
+        return new CacheItemMetaRegistry();
+    }
+
+    @Bean
+    public CacheItemAnnotationBeanPostProcessor cacheItemAnnotationBeanPostProcessor() {
+        return new CacheItemAnnotationBeanPostProcessor();
+    }
+
+    @Bean
+    public CacheCreator cacheCreator() {
+        return new CacheCreator();
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisCacheConfiguration felinaeRedisCacheConfiguration() {
         RedisSerializationContext.SerializationPair<String> keySerializationPair = RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer());
 
         Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
@@ -56,32 +65,20 @@ public class FelinaeCacheAutoConfiguration {
                 .serializeValuesWith(valueSerializationPair);
     }
 
+
     @Bean
     @ConditionalOnBean(RedisConnectionFactory.class)
-    public FelinaeGinRedisCacheManager felinaeGinRedisCacheManager(RedisConnectionFactory redisConnectionFactory,
-                                                            @Qualifier("felinaeRedisCacheConfiguration") RedisCacheConfiguration redisCacheConfiguration){
+    public FelinaeRedisCacheManager felinaeGinRedisCacheManager(RedisConnectionFactory redisConnectionFactory,
+                                                                @Qualifier("felinaeRedisCacheConfiguration") RedisCacheConfiguration redisCacheConfiguration) {
         RedisCacheWriter redisCacheWriter = RedisCacheWriter.nonLockingRedisCacheWriter(redisConnectionFactory);
-        FelinaeGinRedisCacheManager felinaeGinRedisCacheManager = new FelinaeGinRedisCacheManager(redisCacheWriter, redisCacheConfiguration);
-        return felinaeGinRedisCacheManager;
+        FelinaeRedisCacheManager felinaeRedisCacheManager = new FelinaeRedisCacheManager(redisCacheWriter, redisCacheConfiguration);
+        return felinaeRedisCacheManager;
     }
 
     @Bean
     @Primary
-    public SimpleCacheManager felinaeCacheManager(@Qualifier("cacheProperties") List<CacheProperty> cacheProperties) {
-        SimpleCacheManager cacheManager = new SimpleCacheManager();
-        if (CollectionUtils.isEmpty(cacheProperties)){
-            logger.info("No Cache Configured");
-            return cacheManager;
-        }
-
-        List<Cache> caches = new LinkedList<>();
-
-        for (CacheProperty cacheProperty : cacheProperties){
-            Cache cache = cacheCreator.createGinCache(cacheProperty);
-            caches.add(cache);
-        }
-        cacheManager.setCaches(caches);
-        return cacheManager;
+    public CacheManager felinaeCacheManager() {
+        return new FelinaeCacheManager();
     }
 
 }
